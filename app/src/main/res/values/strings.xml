@@ -6,4 +6,13 @@
     <string name="loginUsername">Username</string>
     <string name="loginPassword">Password</string>
     <string name="loginButton">Login</string>
+
+
+
+    <!-- NAV BAR STRINGS -->
+    <string name="homepage">Homepage</string>
+    <string name="profile">Profile</string>
+    <string name="workout">Workout</string>
+    <string name="cardio">Cardio</string>
+
 </resources>
