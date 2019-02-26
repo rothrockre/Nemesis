@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Nemesis</string>
+
+    <!-- LOGIN SCREEN STRINGS -->
+    <string name="createAccount">Create an account</string>
+    <string name="loginUsername">Username</string>
+    <string name="loginPassword">Password</string>
+    <string name="loginButton">Login</string>
+</resources>
