@@ -1,5 +1,6 @@
 package com.example.nemesis;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.design.widget.*;
@@ -45,11 +46,28 @@ public class Homepage extends AppCompatActivity {
                         // For example, swap UI fragments here
                         switch (menuItem.getItemId()) {
 
-                            case R.id.:
-                                Intent anIntent = new Intent(getApplicationContext(), TheClassYouWantToLoad.class);
-                                startActivity(loadPlayer);
+                            case R.id.nav_homepage:
+                                Intent homepageIntent = new Intent(getApplicationContext(), Homepage.class);
+                                startActivity(homepageIntent);
                                 drawerLayout.closeDrawers();
                                 break;
+                            case R.id.nav_profile:
+                                Intent profileIntent = new Intent(getApplicationContext(), Profile.class);
+                                startActivity(profileIntent);
+                                drawerLayout.closeDrawers();
+                                break;
+                            case R.id.nav_workout:
+                                Intent workoutIntent = new Intent(getApplicationContext(), Workout.class);
+                                startActivity(workoutIntent);
+                                drawerLayout.closeDrawers();
+                                break;
+                            case R.id.nav_cardio:
+                                Intent cardioIntent = new Intent(getApplicationContext(), Cardio.class);
+                                startActivity(cardioIntent);
+                                drawerLayout.closeDrawers();
+                                break;
+
+                        }
                         return true;
                     }
                 });
