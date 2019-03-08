@@ -43,7 +43,13 @@ public class Homepage extends AppCompatActivity {
 
                         // Add code here to update the UI based on the item selected
                         // For example, swap UI fragments here
+                        switch (menuItem.getItemId()) {
 
+                            case R.id.:
+                                Intent anIntent = new Intent(getApplicationContext(), TheClassYouWantToLoad.class);
+                                startActivity(loadPlayer);
+                                drawerLayout.closeDrawers();
+                                break;
                         return true;
                     }
                 });
