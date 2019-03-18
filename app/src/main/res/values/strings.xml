@@ -8,11 +8,12 @@
     <string name="loginButton">Login</string>
 
 
-
     <!-- NAV BAR STRINGS -->
     <string name="homepage">Homepage</string>
     <string name="profile">Profile</string>
     <string name="workout">Workout</string>
     <string name="cardio">Cardio</string>
+
+    <string name="addWorkoutButton">Add Workout</string>
 
 </resources>

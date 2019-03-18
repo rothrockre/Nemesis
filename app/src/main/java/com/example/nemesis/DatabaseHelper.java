@@ -36,7 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_WORKOUT_TABLE = "CREATE TABLE" + TABLE_WORKOUTS + "("
-                + KEY_WORKOUTID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
+                + KEY_WORKOUTID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_NAME + " TEXT,"
                 + KEY_MUSCLE + " TEXT," + KEY_REPS + " INTEGER,"
                 + KEY_SETS + " INTEGER" + ")";
         db.execSQL(CREATE_WORKOUT_TABLE);
@@ -49,7 +49,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-
+    //ADD NEW ROW TO THE DATABASE.
     void addWorkout(Workouts workouts) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -63,6 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_WORKOUTS, null, values);
         db.close();
     }
+
 
     Workouts getWorkouts(int id){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -111,7 +112,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(workouts.getId())});
     }
 
-
+    //DELETE WORKOUT FROM DATABASE
     public void deleteWorkout(Workouts workouts) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_WORKOUTS, KEY_WORKOUTID + "=?",
@@ -119,6 +120,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    //PRINT THE NAME OF WORKOUT AS A STRING
+    public String WorkoutName(String name) {
+        String dbName = "";
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT " + KEY_NAME
+                                + " FROM " + TABLE_WORKOUTS
+                                + " WHERE " + KEY_NAME
+                                + " = " + name;
+
+        Cursor c = db.rawQuery(query, null);
+
+        c.moveToFirst();
+        return c.getString(c.getColumnIndex(KEY_NAME));
+    }
 
 
 //close for main class

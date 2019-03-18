@@ -10,10 +10,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.view.GravityCompat;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 public class Workout extends AppCompatActivity {
 
-
+    private Button addWorkoutBtn;
     private DrawerLayout drawerLayout;
 
 
@@ -29,6 +31,7 @@ public class Workout extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
+        addWorkoutBtn = (Button)findViewById(R.id.addworkoutbtn);
 
         drawerLayout = findViewById(R.id.drawer_layout);
 
@@ -95,6 +98,15 @@ public class Workout extends AppCompatActivity {
                     }
                 }
         );
+
+
+
+        addWorkoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    openAddWorkout();
+            }
+        });
     }
 
     @Override
@@ -105,6 +117,11 @@ public class Workout extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void openAddWorkout() {
+        Intent intent = new Intent(this, AddWorkout.class);
+        startActivity(intent);
     }
 
 }
