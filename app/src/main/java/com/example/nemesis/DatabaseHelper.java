@@ -28,9 +28,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_REPS = "reps";
     private static final String KEY_SETS = "sets";
 
+    Workouts myhelper;
 
     public DatabaseHelper(Context context) {
+
         super(context, DATABASE_NAME, null, DATABSE_VERSION);
+        myhelper = new Workouts(context);
     }
 
     @Override
@@ -75,11 +78,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cursor.moveToFirst();
         }
 
-        Workouts workouts = new Workouts(cursor.getString(1), cursor.getString(2), Integer.parseInt(cursor.getString(0)),
+        Workouts workouts = new Workouts(cursor.getString(1), cursor.getString(2),
                 Integer.parseInt(cursor.getString(3)), Integer.parseInt(cursor.getString(4)));
 
         return workouts;
     }
+
+
 
 
 //    public List<Workouts> getAllWorkouts() {
@@ -121,20 +126,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //PRINT THE NAME OF WORKOUT AS A STRING
-    public String WorkoutName(String name) {
+    public String WorkoutName(int id) {     //(String Name)
         String dbName = "";
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT " + KEY_NAME
                                 + " FROM " + TABLE_WORKOUTS
-                                + " WHERE " + KEY_NAME
-                                + " = " + name;
+                                + " WHERE " + KEY_WORKOUTID //KEY_NAME
+                                + " = " + id;
 
         Cursor c = db.rawQuery(query, null);
 
         c.moveToFirst();
+        db.close();
         return c.getString(c.getColumnIndex(KEY_NAME));
     }
 
+
+    public String databaseToString() {
+        String dbString = "";
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT name FROM " + TABLE_WORKOUTS + "WHERE 1";
+
+        Cursor c = db.rawQuery(query, null);
+
+        c.moveToFirst();
+
+        while(!c.isAfterLast()) {
+            if(c.getString(c.getColumnIndex("name")) != null) {
+                dbString += c.getString(c.getColumnIndex("name"));
+                dbString += "\n";
+            }
+        }
+        db.close();
+        return dbString;
+    }
 
 //close for main class
 }
