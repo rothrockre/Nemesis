@@ -58,21 +58,14 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Email ID" />
-
     <Button
         android:id="@+id/buttonOK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tPassword"
         android:layout_alignEnd="@+id/tPassword"
         android:layout_alignRight="@+id/tPassword"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="133dp"
-        android:layout_marginLeft="133dp"
+        android:layout_below="@+id/tPassword"
         android:layout_marginTop="47dp"
-        android:layout_marginEnd="69dp"
-        android:layout_marginRight="69dp"
         android:background="@color/colorAccent"
         android:onClick="OK"
         android:text="OK" />

@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             Log.e("Error", "error login");
         }
     }
-    public void SignUP(View view)
+    public void openSignUP(View view)
     {
         Intent intent = new Intent(MainActivity.this, SignUp.class);
         startActivity(intent);
