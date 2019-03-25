@@ -19,4 +19,10 @@
     <string name="lastname">Last Name</string>
     <string name="usernameSU">Username</string>
 
-    </resources>
+    <string name="addworkout">Add Workout</string>
+    <string name="workoutname">Workout Name</string>
+    <string name="musclegroup">Muscle Group</string>
+    <string name="sets">Sets</string>
+    <string name="reps">Reps</string>
+
+</resources>

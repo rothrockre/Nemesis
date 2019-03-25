@@ -77,7 +77,7 @@ public class LoginDataBaseAdapter {
         Toast.makeText(context, "Number fo Entry Deleted Successfully : "+numberOFEntriesDeleted, Toast.LENGTH_LONG).show();
         return numberOFEntriesDeleted;
     }
-    // method to get the password  of userName
+    // method to get the password of userName
     public String getSinlgeEntry(String userName)
     {
         db=dbHelper.getReadableDatabase();
