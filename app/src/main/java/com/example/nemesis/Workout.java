@@ -107,4 +107,9 @@ public class Workout extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void openAddWorkoutPage(View view){
+        Intent intent=new Intent(this,AddWorkoutPage.class);
+        startActivity(intent);
+    }
+
 }
