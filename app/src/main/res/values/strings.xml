@@ -6,6 +6,7 @@
     <string name="loginUsername">Username</string>
     <string name="loginPassword">Password</string>
     <string name="loginButton">Login</string>
+    <string name="signin">Sign In</string>
 
 
     <!-- NAV BAR STRINGS -->

@@ -70,6 +70,8 @@ public class AddWorkoutPage extends AppCompatActivity {
             finish();
         }
     }
+
+
     @Override
     protected void onDestroy()
     {
