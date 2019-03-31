@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.view.GravityCompat;
 import android.view.View;
 import android.webkit.HttpAuthHandler;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +29,11 @@ import java.net.URL;
 public class Homepage extends AppCompatActivity {
 
     String news_url;
+    TextView news1;
+    TextView news2;
+    TextView news3;
+    TextView news4;
+    TextView news5;
 
     private DrawerLayout drawerLayout;
 
@@ -45,7 +51,14 @@ public class Homepage extends AppCompatActivity {
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
         ///////////////////////////////////////////////
+        news1 = findViewById(R.id.news1TV);
+        news2 = findViewById(R.id.news2TV);
+        news3 = findViewById(R.id.news3TV);
+        news4 = findViewById(R.id.news4TV);
+        news5 = findViewById(R.id.news5TV);
+
         news_url = "https://newsapi.org/v2/everything?q=fox-sports&apiKey=0b23857f53cb4d00aee3ad9e141222cd";
+        JSONObject
 
 
         new Homepage.AsyncHttpTask().execute(news_url);
