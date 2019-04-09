@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
+            <Button
                 android:id="@+id/news5TV"
                 android:layout_width="397dp"
                 android:layout_height="109dp"
@@ -28,15 +28,16 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:text="Homepage"
+                android:onClick="browser4"
                 android:textAlignment="center"
-                android:textSize="33dp"
+                android:textColor="@color/design_default_color_primary_dark"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/news4TV" />
 
-            <TextView
+            <Button
                 android:id="@+id/news4TV"
                 android:layout_width="397dp"
                 android:layout_height="109dp"
@@ -45,15 +46,16 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:text="Homepage"
+                android:onClick="goToUrl3"
                 android:textAlignment="center"
-                android:textSize="33dp"
+                android:textColor="@color/design_default_color_primary_dark"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/news3TV" />
 
-            <TextView
+            <Button
                 android:id="@+id/news3TV"
                 android:layout_width="397dp"
                 android:layout_height="109dp"
@@ -62,15 +64,16 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:text="Homepage"
+                android:onClick="goToUrl2"
                 android:textAlignment="center"
-                android:textSize="33dp"
+                android:textColor="@color/design_default_color_primary_dark"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/news2TV" />
 
-            <TextView
+            <Button
                 android:id="@+id/news2TV"
                 android:layout_width="397dp"
                 android:layout_height="109dp"
@@ -79,9 +82,10 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:text="Homepage"
+                android:onClick="goToUrl1"
                 android:textAlignment="center"
-                android:textSize="33dp"
+                android:textColor="@color/design_default_color_primary_dark"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -102,7 +106,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <Button
                 android:id="@+id/news1TV"
                 android:layout_width="397dp"
                 android:layout_height="109dp"
@@ -111,9 +115,11 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:autoLink="web"
+                android:onClick="goToUrl0"
                 android:textAlignment="center"
-                android:text="Homepage"
-                android:textSize="33dp"
+                android:textColor="@color/design_default_color_primary_dark"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar" />

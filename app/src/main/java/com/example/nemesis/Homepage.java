@@ -1,7 +1,10 @@
 package com.example.nemesis;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.StrictMode;
+import android.renderscript.ScriptGroup;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.design.widget.*;
@@ -13,7 +16,21 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.view.GravityCompat;
 import android.view.View;
 import android.webkit.HttpAuthHandler;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,18 +40,23 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.ConnectException;
+import java.net.HttpRetryException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
+import java.util.Scanner;
+
 
 public class Homepage extends AppCompatActivity {
 
-    String news_url;
-    TextView news1;
-    TextView news2;
-    TextView news3;
-    TextView news4;
-    TextView news5;
+    private static String NEWS_URL = "https://newsapi.org/v2/everything?q=fox-sports&apiKey=0b23857f53cb4d00aee3ad9e141222cd";
+    Button[] news;
+    JsonObject jsonObject;
+    private String jsonString = "";
 
+    String[][] headlinearray;
     private DrawerLayout drawerLayout;
 
 
@@ -50,18 +72,39 @@ public class Homepage extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
-        ///////////////////////////////////////////////
-        news1 = findViewById(R.id.news1TV);
-        news2 = findViewById(R.id.news2TV);
-        news3 = findViewById(R.id.news3TV);
-        news4 = findViewById(R.id.news4TV);
-        news5 = findViewById(R.id.news5TV);
+        //////////////////////////////////////////////
+        news = new Button[5];
+        news[0] = findViewById(R.id.news1TV);
+        news[1] = findViewById(R.id.news2TV);
+        news[2] = findViewById(R.id.news3TV);
+        news[3] = findViewById(R.id.news4TV);
+        news[4] = findViewById(R.id.news5TV);
 
-        news_url = "https://newsapi.org/v2/everything?q=fox-sports&apiKey=0b23857f53cb4d00aee3ad9e141222cd";
-        JSONObject
+//        mQueue = Volley.newRequestQueue(this);
+        //jsonParse();
+
+        String test = "test";
+        //json String gets set here
+        headlinearray = new String[2][5];
+        //new Homepage.AsyncHttpTask().execute(NEWS_URL);
+
+        String myJson = openConnectionToNewsAPI_Get();
+        //jsonString = openConnectionToNewsAPI_Get();
+        //Log.i("json", jsonString);
+
+        jsonObject = new JsonParser().parse(myJson).getAsJsonObject();
+        //headlinearray[2] is for picture link.
+
+        headlinearray[0] = parseJsonForHeadlines();
+        headlinearray[1] = parseJsonForHeadlineLinks();
+        //headlinearray[2] = parsejsonforpicture();
+        for (int i = 0; i < 5; i++) {
+            news[i].setText(headlinearray[0][i]);
+        }
 
 
-        new Homepage.AsyncHttpTask().execute(news_url);
+
+
         ////////////////////////////////////////////////
 
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -144,65 +187,126 @@ public class Homepage extends AppCompatActivity {
     }
 
 
-    public class AsyncHttpTask extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... urls) {
-
-            String result = "";
-            URL url;
-            HttpURLConnection urlConnection = null;
-
-            try {
-                url = new URL(urls[0]);
-                urlConnection = (HttpURLConnection) url.openConnection();
-                String response = streamToString(urlConnection.getInputStream());
-                parseResult(response);
-                return result;
 
 
-            }catch (Exception e) {
-                e.printStackTrace();
-            }
 
 
-            return null;
+    private String[] parseJsonForHeadlines() {
+        String[] headlineArrays = new String[5];
+
+        JsonArray jsonArray = jsonObject.getAsJsonArray("articles");
+        JsonElement jsonElement;
+        JsonObject jsonArrayObject;
+
+        for (int i = 0; i < 5; i++) {
+            jsonElement = jsonArray.get(i);
+            jsonArrayObject = (JsonObject) jsonElement;
+            headlineArrays[i] = jsonArrayObject.get("title").toString();
         }
+        return headlineArrays;
+
     }
 
-    String streamToString(InputStream stream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
-        String data;
-        String result ="";
+    private String[] parseJsonForHeadlineLinks() {
+        String[] headlineLinksArray = new String[5];
+        JsonArray jsonArray = jsonObject.getAsJsonArray("articles");
+        JsonElement jsonElement;
+        JsonObject jsonArrayObject;
+        String linkpretrim;
 
-        while ((data = bufferedReader.readLine()) != null) {
-
-            result += data;
+        for (int i = 0; i < 5; i++) {
+            jsonElement = jsonArray.get(i);
+            jsonArrayObject = (JsonObject) jsonElement;
+            linkpretrim = jsonArrayObject.get("url").toString();
+            headlineLinksArray[i] = linkpretrim.replaceAll("^\"|\"$", "");
         }
+        return headlineLinksArray;
 
-        if(null != stream) {
-            stream.close();
-        }
 
-        return result;
     }
 
-    private void parseResult(String result) {
-        JSONObject response = null;
+
+
+    private String openConnectionToNewsAPI_Get() {
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        HttpURLConnection connection = null;
+        InputStream is = null;
+
         try {
-            response = new JSONObject(result);
-            JSONArray articles = response.optJSONArray("articles");
+            URL url = new URL("https://newsapi.org/v2/everything?q=fox-sports&apiKey=0b23857f53cb4d00aee3ad9e141222cd");
 
-            for(int i = 0; i < articles.length(); i++) {
-                JSONObject article = articles.getJSONObject(i);
-                String title = article.optString("title");
-                Log.i("Titles", title);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setDoInput(true);
+
+            connection.connect();
+
+            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                is = connection.getErrorStream();
+            }
+            else {
+                is = connection.getInputStream();
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        JSONArray articles = response.optJSONArray("articles");
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String line = br.readLine();
 
+
+
+            is.close();
+            connection.disconnect();
+
+            if (line.contains("rateLimited")) {
+                return "Currently Rate Limited by NewsAPI";
+            }
+            return line;
+
+
+
+
+        } catch(Throwable e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+            }
+            catch (Throwable t) {
+            }
+            try {
+                connection.disconnect();
+            } catch (Throwable t) {
+            }
+        }
+        return "News Data unavailable to be retrieved";
     }
+
+    public void goToUrl0 (View view) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(headlinearray[1][0]));
+        startActivity(browserIntent);
+    }
+
+    public void goToUrl1 (View view) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(headlinearray[1][1]));
+        startActivity(browserIntent);
+    }
+
+    public void goToUrl2 (View view) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(headlinearray[1][2]));
+        startActivity(browserIntent);
+    }
+
+    public void goToUrl3 (View view) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(headlinearray[1][3]));
+        startActivity(browserIntent);
+    }
+
+    public void browser4 (View view) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(headlinearray[1][4]));
+        startActivity(browserIntent);
+    }
+
+
 }

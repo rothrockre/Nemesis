@@ -13,7 +13,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".AddWorkoutPage"></activity>
         <activity android:name=".SignUp" />
-        <activity android:name=".sign_up" />
+        <!--<activity android:name=".sign_up" /> -->
         <activity android:name=".Cardio" />
         <activity android:name=".Profile" />
         <activity android:name=".Workout" />
