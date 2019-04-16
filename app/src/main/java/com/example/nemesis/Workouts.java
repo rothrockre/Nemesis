@@ -11,10 +11,9 @@ public class Workouts {
 
     }
 
-    public Workouts(String name, String muscleGroup, int id, int sets, int reps) {
+    public Workouts(String name, String muscleGroup, int sets, int reps) {
         this.name = name;
         this.muscleGroup = muscleGroup;
-        this.id = id;
         this.sets = sets;
         this.reps = reps;
     }
