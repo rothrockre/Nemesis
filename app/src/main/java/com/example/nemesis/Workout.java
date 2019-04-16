@@ -1,6 +1,8 @@
 package com.example.nemesis;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.design.widget.*;
@@ -10,12 +12,18 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.view.GravityCompat;
 import android.view.View;
+import android.widget.TextView;
 
 public class Workout extends AppCompatActivity {
 
+    static final String DATABASE_NAME = "WORKOUTDB";
+    static final int DATABASE_VERSION = 1;
 
     private DrawerLayout drawerLayout;
-
+    WorkoutDataBaseHelper dbHelper;
+    //SQLiteDatabase db;
+    WorkoutDataBaseAdapter db;
+    TextView tv1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +36,8 @@ public class Workout extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+
+
 
 
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -95,6 +105,8 @@ public class Workout extends AppCompatActivity {
                     }
                 }
         );
+
+
     }
 
     @Override

@@ -20,7 +20,7 @@ public class WorkoutDataBaseAdapter {
     public static final int NAME_COLUMN = 1;
     // TODO: Create public field for each column in your table.
     // SQL Statement to create a new database.
-    static final String DATABASE_CREATE = "create table WORKOUT( ID integer primary key autoincrement,WORKOUTNAME  text,MUSCLEGROUP  text,SETS integer,REPS integer); ";
+    static final String DATABASE_CREATE = "create table WORKOUT( ID integer primary key autoincrement, WORKOUTNAME  text,MUSCLEGROUP  text,SETS integer,REPS integer); ";
     // Variable to hold the database instance
     public static SQLiteDatabase db;
     // Context of the application using the database.
@@ -73,6 +73,15 @@ public class WorkoutDataBaseAdapter {
         }
         return ok;
     }
+
+    public Cursor retrieveWorkouts() {
+        //get workout names
+        Cursor cursor = db.rawQuery("select WORKOUTNAME from WORKOUT", null);
+        return cursor;
+
+    }
+
+
     // method to delete a Record of UserName
     public int deleteEntry(String workoutname)
     {
