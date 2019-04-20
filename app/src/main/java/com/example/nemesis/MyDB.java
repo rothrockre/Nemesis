@@ -14,6 +14,7 @@ public class MyDB {
     public MyDB(Context context) {
         MyDBHelper helper = new MyDBHelper(context);
         db = helper.getWritableDatabase();
+
     }
 
     public void insert(Workouts workout) {
@@ -45,7 +46,7 @@ public class MyDB {
                 null
         );
 
-        if (cursor.getCount() != 0) {
+        if (cursor.getCount() !=   0) {
             while(cursor.moveToNext()) {
                 String name = cursor.getString(0);
                 String muscle = cursor.getString(1);

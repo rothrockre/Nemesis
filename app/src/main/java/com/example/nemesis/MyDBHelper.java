@@ -23,10 +23,10 @@ public class MyDBHelper extends SQLiteOpenHelper {
                 WorkoutsEntry.WORKOUT_TABLE_NAME +"(" +
                 WorkoutsEntry.ID_COLUMN + " integer primary key autoincrement," +
                 WorkoutsEntry.WORKOUTNAME_COLUMN + " text not null, " +
-                WorkoutsEntry.MUSCLEGROUP_COLUMN + "text, " +
+                WorkoutsEntry.MUSCLEGROUP_COLUMN + " text, " +
                 WorkoutsEntry.SETS_COLUMN + " integer, " +
                 WorkoutsEntry.REPS_COLUMN + " integer" +
-                ");"
+                ")"
         );
     }
 

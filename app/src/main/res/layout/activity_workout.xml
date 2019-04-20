@@ -36,7 +36,7 @@
             <TextView
                 android:id="@+id/tv1"
                 android:layout_width="202dp"
-                android:layout_height="109dp"
+                android:layout_height="39dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
@@ -55,14 +55,108 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="128dp"
+                android:layout_marginTop="400dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:onClick="openAddWorkoutPage"
+                android:onClick="addWorkout"
                 android:text="@string/addworkout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv1" />
+
+            <ListView
+                android:id="@+id/lv_workouts"
+                android:layout_width="395dp"
+                android:layout_height="365dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/addworkoutinit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv1"
+                app:layout_constraintVertical_bias="0.015" />
+
+            <TextView
+                android:id="@+id/tv_chest"
+                android:layout_width="90dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="88dp"
+                android:text="TextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lv_workouts" />
+
+            <TextView
+                android:id="@+id/tv_biceps"
+                android:layout_width="90dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="88dp"
+                android:text="TextView"
+                app:layout_constraintStart_toEndOf="@+id/tv_chest"
+                app:layout_constraintTop_toBottomOf="@+id/lv_workouts" />
+
+            <TextView
+                android:id="@+id/tv_triceps"
+                android:layout_width="90dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="88dp"
+                android:text="TextView"
+                app:layout_constraintStart_toEndOf="@+id/tv_biceps"
+                app:layout_constraintTop_toBottomOf="@+id/lv_workouts" />
+
+            <TextView
+                android:id="@+id/tv_legs"
+                android:layout_width="90dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="88dp"
+                android:text="TextView"
+                app:layout_constraintStart_toEndOf="@+id/tv_triceps"
+                app:layout_constraintTop_toBottomOf="@+id/lv_workouts" />
+
+            <TextView
+                android:id="@+id/tv_shoulder"
+                android:layout_width="90dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginLeft="28dp"
+                android:layout_marginTop="24dp"
+                android:text="TextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_chest" />
+
+            <TextView
+                android:id="@+id/tv_back"
+                android:layout_width="90dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginLeft="28dp"
+                android:layout_marginTop="24dp"
+                android:text="TextView"
+                app:layout_constraintStart_toEndOf="@+id/tv_shoulder"
+                app:layout_constraintTop_toBottomOf="@+id/tv_biceps" />
+
+            <TextView
+                android:id="@+id/tv_forearms"
+                android:layout_width="90dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="24dp"
+                android:text="TextView"
+                app:layout_constraintStart_toEndOf="@+id/tv_back"
+                app:layout_constraintTop_toBottomOf="@+id/tv_legs" />
         </android.support.constraint.ConstraintLayout>
 
 
