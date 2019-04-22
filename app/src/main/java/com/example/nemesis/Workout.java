@@ -16,9 +16,11 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.view.GravityCompat;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,12 +54,12 @@ public class Workout extends AppCompatActivity {
     private int shoulderCount;
     private int forearmCount;
     private int backCount;
-    private String bicepString = "Bicep";
-    private String tricepString = "Tricep";
+    private String bicepString = "Biceps";
+    private String tricepString = "Triceps";
     private String chestString = "Chest";
     private String legString = "Legs";
-    private String shoulderString = "Shoulder";
-    private String forearmString = "Forearm";
+    private String shoulderString = "Shoulders";
+    private String forearmString = "Forearms";
     private String backString = "Back";
 
     @Override
@@ -81,6 +83,13 @@ public class Workout extends AppCompatActivity {
         tv_shoulder = findViewById(R.id.tv_shoulder);
         tv_forearms = findViewById(R.id.tv_forearms);
         tv_legs = findViewById(R.id.tv_legs);
+//        chestCount = 0;
+//        legCount = 0;
+//        shoulderCount = 0;
+//        backCount = 0;
+//        forearmCount =0;
+//        tricepCount =0;
+//        bicepCount = 0;
 
         sqlite = new MyDB(this);
 
@@ -91,10 +100,44 @@ public class Workout extends AppCompatActivity {
 
         for(Workouts w : workoutData) {
             String temp = getWorkoutAsString(w);
-            if(w.getMuscleGroup() == "Chest") {
-                chestCount++;
-            }
             data.add(temp);
+
+        }
+        for(Workouts w : workoutData) {
+            String x = w.getMuscleGroup();
+
+            switch (x.toLowerCase()) {
+                case("chest"):
+                    chestCount++;
+                    break;
+                case("legs"):
+                    legCount++;
+                    break;
+                case("shoulders"):
+                    shoulderCount++;
+                    break;
+                case("biceps"):
+                    bicepCount++;
+                    break;
+                case("triceps"):
+                    tricepCount++;
+                    break;
+                case("forearms"):
+                    forearmCount++;
+                    break;
+                case("back"):
+                    backCount++;
+                    break;
+                default:
+                    break;
+            }
+            tv_chest.setText("Chest\n" + chestCount);
+            tv_legs.setText("Legs\n" + legCount);
+            tv_forearms.setText("Forearms\n" + forearmCount);
+            tv_shoulder.setText("Shoulders\n" + shoulderCount);
+            tv_back.setText("Back\n" + backCount);
+            tv_tricep.setText("Triceps\n" + tricepCount);
+            tv_bicep.setText("Biceps\n" + bicepCount);
         }
 
         //if no data in database show a toast
@@ -109,13 +152,17 @@ public class Workout extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1 ,data);
         lv_workouts_show.setAdapter(adapter);
 
+
+
+
         tv_chest.setText("Chest\n" + chestCount);
         tv_legs.setText("Legs\n" + legCount);
         tv_forearms.setText("Forearms\n" + forearmCount);
-        tv_shoulder.setText("Shoulders" + shoulderCount);
-        tv_back.setText("Back" + backCount);
-        tv_tricep.setText("Triceps" + tricepCount);
-        tv_bicep.setText("Biceps" + bicepCount);
+        tv_shoulder.setText("Shoulders\n" + shoulderCount);
+        tv_back.setText("Back\n" + backCount);
+        tv_tricep.setText("Triceps\n" + tricepCount);
+        tv_bicep.setText("Biceps\n" + bicepCount);
+
 
 
         ////////////////////Workout Stuff//////
@@ -219,9 +266,13 @@ public class Workout extends AppCompatActivity {
         edtName.setHint("Workout Name");
         edtName.setPadding(10,32,10,32);
 
-        final EditText edtMuscle = new EditText(this);
-        edtMuscle.setHint("Muscle Group");
+//        final EditText edtMuscle = new EditText(this);
+//        edtMuscle.setHint("Muscle Group");
+//        edtMuscle.setPadding(10,32,10,32);
+
+        final Spinner edtMuscle = new Spinner(this);
         edtMuscle.setPadding(10,32,10,32);
+
 
         final EditText edtSets = new EditText(this);
         edtSets.setHint("Sets Performed");
@@ -233,6 +284,14 @@ public class Workout extends AppCompatActivity {
         edtReps.setInputType(InputType.TYPE_CLASS_NUMBER);
         edtReps.setPadding(10,32,10,32);
 
+        String[] muscles = {chestString, bicepString, tricepString, backString, shoulderString, forearmString, legString};
+
+
+//create an adapter to describe how the items are displayed, adapters are used in several places in android.
+//There are multiple variations of this, but this is the basic variant.
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, muscles);
+//set the spinners adapter to the previously created one.
+        edtMuscle.setAdapter(adapter1);
 
         LinearLayout view = new LinearLayout(this);
         view.setOrientation(LinearLayout.VERTICAL);
@@ -249,42 +308,51 @@ public class Workout extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         //if no workout name or info do nothing
                         if(edtName.getText().toString().trim().isEmpty()
-                            || edtMuscle.getText().toString().trim().isEmpty()) {
+                            || edtMuscle.getSelectedItem().toString().trim().isEmpty()) {
                             return;
                         }
 
                         //create workout entity to save in database
                         Workouts w = new Workouts();
                         w.setName(edtName.getText().toString());
-                        w.setMuscleGroup(edtMuscle.getText().toString());
+                        w.setMuscleGroup(edtMuscle.getSelectedItem().toString());
                         w.setSets(Integer.parseInt(edtSets.getText().toString()));
                         w.setReps(Integer.parseInt(edtReps.getText().toString()));
 
-                        switch (w.getMuscleGroup()) {
-                            case("Chest"):
-                                chestCount++;
-                                break;
-                            case("Legs"):
-                                legCount++;
-                                break;
-                            case("Shoulders"):
-                                shoulderCount++;
-                                break;
-                            case("Biceps"):
-                                bicepCount++;
-                                break;
-                            case("Triceps"):
-                                tricepCount++;
-                                break;
-                            case("Forearms"):
-                                forearmCount++;
-                                break;
-                            case("Back"):
-                                backCount++;
-                                break;
-                            default:
-                                break;
-                        }
+//                        String x = edtMuscle.getSelectedItem().toString().toLowerCase();
+//
+//                        switch (x) {
+//                            case("chest"):
+//                                chestCount++;
+//                                break;
+//                            case("legs"):
+//                                legCount++;
+//                                break;
+//                            case("shoulders"):
+//                                shoulderCount++;
+//                                break;
+//                            case("biceps"):
+//                                bicepCount++;
+//                                break;
+//                            case("triceps"):
+//                                tricepCount++;
+//                                break;
+//                            case("forearms"):
+//                                forearmCount++;
+//                                break;
+//                            case("back"):
+//                                backCount++;
+//                                break;
+//                            default:
+//                                break;
+//                        }
+//                        tv_chest.setText("Chest\n" + chestCount);
+//                        tv_legs.setText("Legs\n" + legCount);
+//                        tv_forearms.setText("Forearms\n" + forearmCount);
+//                        tv_shoulder.setText("Shoulders\n" + shoulderCount);
+//                        tv_back.setText("Back\n" + backCount);
+//                        tv_tricep.setText("Triceps\n" + tricepCount);
+//                        tv_bicep.setText("Biceps\n" + bicepCount);
 
                         //save into database
                         sqlite.insert(w);
