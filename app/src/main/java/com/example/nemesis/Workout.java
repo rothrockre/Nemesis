@@ -75,6 +75,7 @@ public class Workout extends AppCompatActivity {
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
         ////////////////////Workout Stuff//////
+        tv1 = findViewById(R.id.tv1);
         lv_workouts_show = findViewById(R.id.lv_workouts);
         tv_chest = findViewById(R.id.tv_chest);
         tv_back = findViewById(R.id.tv_back);
@@ -83,13 +84,7 @@ public class Workout extends AppCompatActivity {
         tv_shoulder = findViewById(R.id.tv_shoulder);
         tv_forearms = findViewById(R.id.tv_forearms);
         tv_legs = findViewById(R.id.tv_legs);
-//        chestCount = 0;
-//        legCount = 0;
-//        shoulderCount = 0;
-//        backCount = 0;
-//        forearmCount =0;
-//        tricepCount =0;
-//        bicepCount = 0;
+
 
         sqlite = new MyDB(this);
 
@@ -103,34 +98,37 @@ public class Workout extends AppCompatActivity {
             data.add(temp);
 
         }
+
         for(Workouts w : workoutData) {
             String x = w.getMuscleGroup();
 
+
             switch (x.toLowerCase()) {
-                case("chest"):
+                case ("chest"):
                     chestCount++;
                     break;
-                case("legs"):
+                case ("legs"):
                     legCount++;
                     break;
-                case("shoulders"):
+                case ("shoulders"):
                     shoulderCount++;
                     break;
-                case("biceps"):
+                case ("biceps"):
                     bicepCount++;
                     break;
-                case("triceps"):
+                case ("triceps"):
                     tricepCount++;
                     break;
-                case("forearms"):
+                case ("forearms"):
                     forearmCount++;
                     break;
-                case("back"):
+                case ("back"):
                     backCount++;
                     break;
                 default:
                     break;
             }
+
             tv_chest.setText("Chest\n" + chestCount);
             tv_legs.setText("Legs\n" + legCount);
             tv_forearms.setText("Forearms\n" + forearmCount);
@@ -138,7 +136,18 @@ public class Workout extends AppCompatActivity {
             tv_back.setText("Back\n" + backCount);
             tv_tricep.setText("Triceps\n" + tricepCount);
             tv_bicep.setText("Biceps\n" + bicepCount);
+            tv1.setText(muscleRecommendation());
         }
+
+            tv_chest.setText("Chest\n" + chestCount);
+            tv_legs.setText("Legs\n" + legCount);
+            tv_forearms.setText("Forearms\n" + forearmCount);
+            tv_shoulder.setText("Shoulders\n" + shoulderCount);
+            tv_back.setText("Back\n" + backCount);
+            tv_tricep.setText("Triceps\n" + tricepCount);
+            tv_bicep.setText("Biceps\n" + bicepCount);
+            tv1.setText(muscleRecommendation());
+
 
         //if no data in database show a toast
         if(data.size() == 0) {
@@ -257,7 +266,11 @@ public class Workout extends AppCompatActivity {
     }
 
     public void addWorkout(View view) {
+
+
         showDialogInput();
+
+
     }
 
     private void showDialogInput() {
@@ -319,40 +332,43 @@ public class Workout extends AppCompatActivity {
                         w.setSets(Integer.parseInt(edtSets.getText().toString()));
                         w.setReps(Integer.parseInt(edtReps.getText().toString()));
 
-//                        String x = edtMuscle.getSelectedItem().toString().toLowerCase();
-//
-//                        switch (x) {
-//                            case("chest"):
-//                                chestCount++;
-//                                break;
-//                            case("legs"):
-//                                legCount++;
-//                                break;
-//                            case("shoulders"):
-//                                shoulderCount++;
-//                                break;
-//                            case("biceps"):
-//                                bicepCount++;
-//                                break;
-//                            case("triceps"):
-//                                tricepCount++;
-//                                break;
-//                            case("forearms"):
-//                                forearmCount++;
-//                                break;
-//                            case("back"):
-//                                backCount++;
-//                                break;
-//                            default:
-//                                break;
-//                        }
-//                        tv_chest.setText("Chest\n" + chestCount);
-//                        tv_legs.setText("Legs\n" + legCount);
-//                        tv_forearms.setText("Forearms\n" + forearmCount);
-//                        tv_shoulder.setText("Shoulders\n" + shoulderCount);
-//                        tv_back.setText("Back\n" + backCount);
-//                        tv_tricep.setText("Triceps\n" + tricepCount);
-//                        tv_bicep.setText("Biceps\n" + bicepCount);
+                        String x = edtMuscle.getSelectedItem().toString();
+
+
+                        switch (x.toLowerCase()) {
+                            case ("chest"):
+                                chestCount++;
+                                break;
+                            case ("legs"):
+                                legCount++;
+                                break;
+                            case ("shoulders"):
+                                shoulderCount++;
+                                break;
+                            case ("biceps"):
+                                bicepCount++;
+                                break;
+                            case ("triceps"):
+                                tricepCount++;
+                                break;
+                            case ("forearms"):
+                                forearmCount++;
+                                break;
+                            case ("back"):
+                                backCount++;
+                                break;
+                            default:
+                                break;
+                        }
+                        tv_chest.setText("Chest\n" + chestCount);
+                        tv_legs.setText("Legs\n" + legCount);
+                        tv_forearms.setText("Forearms\n" + forearmCount);
+                        tv_shoulder.setText("Shoulders\n" + shoulderCount);
+                        tv_back.setText("Back\n" + backCount);
+                        tv_tricep.setText("Triceps\n" + tricepCount);
+                        tv_bicep.setText("Biceps\n" + bicepCount);
+                        tv1.setText(muscleRecommendation());
+
 
                         //save into database
                         sqlite.insert(w);
@@ -368,6 +384,34 @@ public class Workout extends AppCompatActivity {
                     }
                 });
         builder.create().show();
+    }
+
+    public String muscleRecommendation() {
+
+
+        int temp = (Math.min(Math.min(Math.min(Math.min(Math.min(Math.min(bicepCount, tricepCount),chestCount), legCount),shoulderCount), forearmCount), backCount));
+        if (temp == bicepCount) {
+            return "Why not do a Bicep Workout? Would hate for your muscles to become uneven";
+        }
+        if(temp == tricepCount) {
+            return "Why not do a Tricep Workout? Would hate for your muscles to become uneven!";
+        }
+        if(temp == chestCount) {
+            return "Why not do a Chest Workout? Would hate for your muscle to become uneven!";
+        }
+        if(temp == legCount) {
+            return "Why not do a Leg Workout? Would hate for your legs to get small!";
+        }
+        if(temp == shoulderCount) {
+            return "Why not do a Shoulder Workout? Would hate for your muscles to become uneven!";
+        }
+        if(temp == forearmCount) {
+            return "Why not do a forearm Workout? Would hate for your muscles to become uneven!";
+        }
+        if(temp == backCount) {
+            return "Why not do a Back Workout? Would hate for your muscles to become uneven!";
+        }
+        return "You are doing a good job keeping your workouts even";
     }
 
 
