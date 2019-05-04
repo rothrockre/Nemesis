@@ -170,10 +170,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_legs" />
 
             <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
+                android:id="@+id/appNametoolbar"
+                android:layout_width="144dp"
+                android:layout_height="35dp"
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold"
+                android:textSize="32dp"
+                android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="@+id/toolbar"
                 app:layout_constraintEnd_toEndOf="@+id/toolbar"
                 app:layout_constraintStart_toStartOf="@+id/toolbar"
